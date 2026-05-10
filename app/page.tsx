@@ -1,0 +1,9 @@
+import { prisma } from '@/lib/prisma';
+export default async function Home(){ const c=await prisma.siteContent.findUnique({where:{id:1}}); if(!c) return null; const services=JSON.parse(c.services as unknown as string); const faqs=JSON.parse(c.faqs as unknown as string); const contact=JSON.parse(c.contact as unknown as string);
+return <main className='min-h-screen'>
+<nav className='sticky top-0 z-50 bg-white/80 backdrop-blur border-b'><div className='max-w-6xl mx-auto p-4 flex justify-between'><span className='font-bold text-deepPurple'>د. سارة الحسيني</span><a href={contact.whatsapp} className='bg-hotPink text-white px-4 py-2 rounded-full'>واتساب</a></div></nav>
+<section className='max-w-6xl mx-auto p-6 md:p-12 grid md:grid-cols-2 gap-8 items-center'><div><h1 className='text-5xl font-bold text-deepPurple mb-4'>{c.heroTitle}</h1><p className='text-xl mb-6'>{c.heroSubtitle}</p></div><div className='card'>نتائج طبيعية راقية</div></section>
+<section className='max-w-6xl mx-auto p-6'><h2 className='text-3xl font-bold mb-4'>{c.whyTitle}</h2><div className='grid md:grid-cols-3 gap-4'>{JSON.parse(c.whyItems as unknown as string).map((i:string)=><div key={i} className='card'>{i}</div>)}</div></section>
+<section className='max-w-6xl mx-auto p-6'><h2 className='text-3xl font-bold mb-4'>الخدمات</h2><div className='grid md:grid-cols-2 gap-4'>{services.map((s:{title:string;desc:string})=><div key={s.title} className='card'><h3 className='font-bold'>{s.title}</h3><p>{s.desc}</p></div>)}</div></section>
+<section className='max-w-6xl mx-auto p-6'><h2 className='text-3xl font-bold mb-4'>الأسئلة الشائعة</h2>{faqs.map((f:{q:string;a:string})=><div key={f.q} className='card mb-3'><p className='font-bold'>{f.q}</p><p>{f.a}</p></div>)}</section>
+<footer className='mt-10 p-8 bg-deepPurple text-white text-center'>{contact.phone} - {contact.address}</footer></main>}

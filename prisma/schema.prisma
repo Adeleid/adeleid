@@ -1,0 +1,5 @@
+generator client { provider = "prisma-client-js" }
+datasource db { provider = "sqlite" url = "file:./dev.db" }
+model SiteContent { id Int @id @default(1) heroTitle String heroSubtitle String whyTitle String whyItems Json services Json cases Json testimonials Json faqs Json contact Json seo Json }
+model BookingRequest { id Int @id @default(autoincrement()) name String phone String service String details String createdAt DateTime @default(now()) }
+model AdminUser { id Int @id @default(autoincrement()) username String @unique passwordHash String }
